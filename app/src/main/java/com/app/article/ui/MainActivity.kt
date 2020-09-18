@@ -1,7 +1,8 @@
-package com.app.article
+package com.app.article.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.app.article.R
 
 class MainActivity : AppCompatActivity() {
 

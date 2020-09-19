@@ -43,5 +43,9 @@ class ArticlesFragment :  DaggerFragment() {
 
     }
 
-
+    companion object {
+        fun getInstance():ArticlesFragment{
+            return ArticlesFragment()
+        }
+    }
 }

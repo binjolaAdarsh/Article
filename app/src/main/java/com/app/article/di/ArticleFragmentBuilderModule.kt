@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract  class MainFragmentBuilderModule{
+abstract  class ArticleFragmentBuilderModule{
      @ContributesAndroidInjector
-     abstract  fun  contributeMainFragment(): ArticlesFragment
+     abstract  fun  contributeArticleFragment(): ArticlesFragment
 }

@@ -1,6 +1,5 @@
 package com.app.article.di
 
-import android.provider.SyncStateContract
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -8,11 +7,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import com.app.article.utils.BASE_URL
+import com.app.headlines.network.ArticleService
+import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 object NetworkModule {
 
-    @JvmStatic
+
     @Provides
     @Singleton
     fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {

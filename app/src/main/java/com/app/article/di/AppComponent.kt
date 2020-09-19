@@ -9,14 +9,16 @@ import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class])
+@Component(modules = [AndroidInjectionModule::class, ActivityBuilderModule::class,
+    NetworkModule::class, DbModule::class])
 interface AppComponent : AndroidInjector<BaseApplication> {
     @Component.Builder
-    interface  Builder{
+    interface Builder {
         // if we want to bind particular instance of obj to component at the time of construction
         @BindsInstance
-        fun bindApplication (app:Application):Builder
-        fun build():AppComponent
+        fun bindApplication(app: Application): Builder
+
+        fun build(): AppComponent
     }
 
 }

@@ -1,11 +1,11 @@
 package com.app.article.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.app.article.R
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ArticlesActivity : AppCompatActivity() {
+class ArticlesActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

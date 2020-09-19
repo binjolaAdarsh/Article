@@ -1,5 +1,7 @@
 package com.app.article.di
 
+import com.app.article.di.article.ArticleModule
+import com.app.article.di.article.ArticleScope
 import com.app.article.ui.ArticlesActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,6 +12,8 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilderModule {
 
     // here we write down all potential client of dagger
-    @ContributesAndroidInjector(modules = [MainFragmentBuilderModule::class,MainViewModelModule::class])
-    abstract  fun contributeMainActivity():ArticlesActivity
+    @ArticleScope
+    @ContributesAndroidInjector(modules = [ArticleFragmentBuilderModule::class,MainViewModelModule::class,
+        ArticleModule::class])
+    abstract  fun contributeArticleActivity():ArticlesActivity
 }

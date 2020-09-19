@@ -9,17 +9,23 @@ import java.lang.reflect.Type
 class MediaTypeConverter {
     private val gson = Gson()
     private val type: Type =
-        object : TypeToken<Media>() {}.type
+        object : TypeToken<List<Media>>() {}.type
 
 
     @TypeConverter
-    fun stringToMedia(json: String?): Media? {
+    fun stringToMedia(json: String?): List<Media>? {
+        if (json == null) {
+            return null
+        }
         return gson.fromJson(json, type)
     }
 
 
     @TypeConverter
-    fun mediaToString(media: Media): String? {
+    fun mediaToString(media: List<Media>?): String? {
+        if (media == null) {
+            return null
+        }
         return gson.toJson(media, type)
     }
 }

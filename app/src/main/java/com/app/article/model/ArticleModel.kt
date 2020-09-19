@@ -2,38 +2,34 @@ package com.app.article.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import com.app.article.db.MediaTypeConverter
-import com.app.article.db.UserTypeConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+
 @Entity(tableName = "ArticleTable" )
 data class ArticleModel(
-    @PrimaryKey
-    @SerializedName("id")
-    @Expose
+@PrimaryKey
+ @field:SerializedName("id")
     val id: String,
+ var localId: Int,
 
-    @SerializedName("createdAt")
-    @Expose
+    @field:SerializedName("createdAt")
     val createdAt: String,
-    @SerializedName("content")
-    @Expose
+
+    @field:SerializedName("content")
     val content: String,
-    @SerializedName("comments")
-    @Expose
+
+    @field:SerializedName("comments")
     val comments: Int,
-    @SerializedName("likes")
-    @Expose
-    val likes: Int
-//    @SerializedName("media")
-//    @Expose
-//    val media: List<Media>?=null,
-//    @SerializedName("user")
-//    @Expose
-//    val user: List<User>?=null
+
+    @field:SerializedName("likes")
+    val likes: Int,
+
+    @field:SerializedName("media")
+    val media: List<Media>?=null,
+
+    @field:SerializedName("user")
+    val user: List<User>?=null
 )
 
 data class Media(
@@ -56,7 +52,6 @@ data class Media(
     @Expose
     val url: String
 )
-
 data class User(
     @SerializedName("id")
     @Expose

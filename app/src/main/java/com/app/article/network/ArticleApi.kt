@@ -7,7 +7,7 @@ import retrofit2.http.Query
 /**
  * service class contains  requests and urls for  main Article screen
  */
-interface ArticleService {
+interface ArticleApi {
     /**
      * to get the data of Articles
      * page =>  page to request

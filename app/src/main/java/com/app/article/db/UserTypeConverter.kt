@@ -9,15 +9,21 @@ import java.lang.reflect.Type
 class UserTypeConverter {
     private val gson = Gson()
     private val type: Type =
-        object : TypeToken<User>() {}.type
+        object : TypeToken<List<User>>() {}.type
 
     @TypeConverter
-    fun stringToUser(json: String?): User? {
+    fun stringToUser(json: String?): List<User>? {
+        if (json == null) {
+            return null
+        }
         return gson.fromJson(json, type)
     }
 
     @TypeConverter
-    fun userToString(user: User): String? {
+    fun userToString(user: List<User>?): String? {
+        if (user == null) {
+            return null
+        }
         return gson.toJson(user, type)
     }
 }

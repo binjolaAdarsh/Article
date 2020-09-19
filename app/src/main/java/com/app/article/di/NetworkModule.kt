@@ -1,14 +1,13 @@
 package com.app.article.di
 
+import com.app.article.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import com.app.article.utils.BASE_URL
-import com.app.headlines.network.ArticleService
-import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 object NetworkModule {

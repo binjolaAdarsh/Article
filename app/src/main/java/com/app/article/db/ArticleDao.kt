@@ -2,13 +2,14 @@ package com.app.article.db
 
 import androidx.room.*
 import com.app.article.model.Article
-import com.app.article.model.ArticleModel
 
+/**
+ * Dao for the article entity class
+ */
 @Dao
 interface ArticleDao{
     @Transaction
     suspend fun updateData(articles: List<Article>?) {
-     //deleteAllUsers()
         insertAll(articles)
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.article.model.Article
-import com.app.article.model.ArticleModel
 import com.app.article.repo.DataRepository
 import com.app.article.utils.DEBUG_TAG
 import com.app.article.utils.InternetUtil
@@ -24,22 +23,14 @@ class ArticlesViewModel @Inject constructor(private val dataSource: DataReposito
     var list: MutableList<Article> = mutableListOf()
 
     fun observeNewsData() = articles
-    private lateinit var previousJob: Job
-
     init {
-        getData()
+        startJob()
 
     }
 
-    fun getData(page:String="1") {
+
+     fun startJob(page:String ="1"): Job {
         _articles.postValue(NetworkResult.InProgress)
-        Log.d(DEBUG_TAG, "onloading starts")
-
-        startJob(page)
-
-    }
-
-    private fun startJob(page:String ="1"): Job {
         return viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Make network request using a blocking call
@@ -47,9 +38,6 @@ class ArticlesViewModel @Inject constructor(private val dataSource: DataReposito
                 if(data !=null ){
                        _articles.postValue(NetworkResult.Success(data))
                    }
-
-
-
             } catch (cause: CancellationException) {
                 Log.d(DEBUG_TAG, "job got cancelled $cause")
                 // called when previous job are cancelled

@@ -1,31 +1,26 @@
 package com.app.article.utils
 
-import android.graphics.drawable.Drawable
 import android.view.View
-import android.widget.ImageView
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ln
+import kotlin.math.pow
 
 
 const val BASE_URL="https://5e99a9b1bc561b0016af3540.mockapi.io/jet2/api/v1/"
 const val DEBUG_TAG = "debug_tag"
 const val LIMIT = 10
+const val DATABASE_NAME = "article.db"
 
 @BindingAdapter("android:visibility")
 fun setVisibility(view: View, value: Boolean) {
     view.visibility = if (value) View.VISIBLE else View.GONE
 }
 
-fun dategetTimeAgo(time:String): String {
-    val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+fun dateGetTimeAgo(time:String): String {
+    val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.ENGLISH)
    var date:Date
     try {
         date = input.parse(time)
@@ -53,13 +48,13 @@ fun dategetTimeAgo(time:String): String {
 
     return if (year < currentYear ) {
         val interval = currentYear - year
-        if (interval == 1) "$interval year" else "$interval years"
+        if (interval == 1) "$interval Year" else "$interval Years"
     } else if (month < currentMonth) {
         val interval = currentMonth - month
-        if (interval == 1) "$interval month" else "$interval months"
+        if (interval == 1) "$interval Month" else "$interval Months"
     } else  if (day < currentDay) {
         val interval = currentDay - day
-        if (interval == 1) "$interval day" else "$interval days"
+        if (interval == 1) "$interval Day" else "$interval Days"
     } else if (hour < currentHour) {
         val interval = currentHour - hour
         if (interval == 1) "$interval hr" else "$interval hr" // for hour
@@ -67,31 +62,16 @@ fun dategetTimeAgo(time:String): String {
         val interval = currentMinute - minute
         if (interval == 1) "$interval min" else "$interval min" // for minute
     } else {
-        "a moment ago"
+        "moment ago"
     }
 }
 
  fun numberCalculation(number: Int): String? {
     if (number < 1000) return "" + number
-    val exp = (Math.log(number.toDouble()) / Math.log(1000.0)).toInt()
+    val exp = (ln(number.toDouble()) / ln(1000.0)).toInt()
     return String.format(
         "%.1f%c",
-        number / Math.pow(1000.0, exp.toDouble()),
+        number / 1000.0.pow(exp.toDouble()),
         "kMGTPE"[exp - 1]
     )
-}
-
-fun RecyclerView.setDivider(@DrawableRes drawableRes: Int) {
-    val divider = DividerItemDecoration(
-        this.context,
-        DividerItemDecoration.VERTICAL
-    )
-    val drawable = ContextCompat.getDrawable(
-        this.context,
-        drawableRes
-    )
-    drawable?.let {
-        divider.setDrawable(it)
-        addItemDecoration(divider)
-    }
 }

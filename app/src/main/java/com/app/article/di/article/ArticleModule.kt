@@ -5,6 +5,9 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 
+/**
+ * this will provide  depedencies for the ArticleActivity  within the scope of itself
+ */
 @Module
 class ArticleModule {
     companion object{

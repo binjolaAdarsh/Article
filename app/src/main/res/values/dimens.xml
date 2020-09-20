@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="user_image_size">50dp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="article_recyclerview_padding">16dp</dimen>
+    <dimen name="article_username_margin_start">8dp</dimen>
+    <dimen name="article_user_desig_margin_start">@dimen/article_username_margin_start</dimen>
+    <dimen name="article_image_height">170dp</dimen>
+    <dimen name="margin_top">16dp</dimen>
+    <dimen name="article_image_margin_top">@dimen/margin_top</dimen>
+    <dimen name="article_content_margin_top">@dimen/margin_top</dimen>
+    <dimen name="article_title_margin_top">@dimen/margin_top</dimen>
+    <dimen name="article_url_margin_top">8dp</dimen>
+    <dimen name="article_likes_margin_top">@dimen/margin_top</dimen>
 </resources>

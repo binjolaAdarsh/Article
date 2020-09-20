@@ -6,8 +6,11 @@ import com.app.article.ui.ArticlesActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-// these class should be abstract
-// this contain the subComponents
+/**
+ * these class should be abstract
+ * this contain the subComponents(Activities and its fragments
+ *
+ */
 @Module
 abstract class ActivityBuilderModule {
 

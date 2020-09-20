@@ -10,19 +10,18 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.article.R
-import com.app.article.databinding.FragmentArticlesBinding
 import com.app.article.utils.DEBUG_TAG
 import com.app.article.utils.EndlessRecyclerViewScrollListener
 import com.app.article.utils.ViewModelProviderFactory
 import com.app.headlines.network.NetworkResult
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_articles.*
 import javax.inject.Inject
 
 
@@ -35,67 +34,78 @@ class ArticlesFragment : DaggerFragment() {
     val viewModel: ArticlesViewModel by viewModels {
         providerFactory
     }
-    lateinit var dataBinding: FragmentArticlesBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
-        dataBinding = DataBindingUtil.inflate<FragmentArticlesBinding>(
-            inflater,
-            R.layout.fragment_articles,
-            container,
-            false
-        )
-        return dataBinding.root
+        return inflater.inflate(R.layout.fragment_articles, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataBinding.rvArticles.setHasFixedSize(true)
+        // setting the list to adapter to handle the  config change pagination
        articleAdapter.setAdapterList(viewModel.list)
-        dataBinding.rvArticles.apply {
-            this.adapter = articleAdapter
-        }
-        dataBinding.rvArticles.addItemDecoration( DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
 
         scrollListener = object :
-            EndlessRecyclerViewScrollListener(dataBinding.rvArticles.layoutManager as LinearLayoutManager,viewModel.currentPage) {
+            EndlessRecyclerViewScrollListener(rvArticles.layoutManager as LinearLayoutManager,viewModel.currentPage) {
             override fun onLoadMore(
                 page: Int,
                 totalItemsCount: Int,
                 view: RecyclerView?
-            ) { // Triggered only when new data needs to be appended to the list
-// Add whatever code is needed to append new items to the bottom of the list
+            ) {
+                // Triggered only when new data needs to be appended to the list
+                // initializing currentPage to maintain current page when config change happen
                 viewModel.currentPage = page
-                dataBinding.pbProcessing.visibility = VISIBLE
-                viewModel.getData(page.toString())
-                Toast.makeText(requireContext(), "loading more", Toast.LENGTH_SHORT).show()
+                pbProcessing.visibility = VISIBLE
+
+                // get the next page data
+                viewModel.startJob(page.toString())
             }
         }
 
-        dataBinding.rvArticles.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+        // setting up recyclerView
+        rvArticles.apply {
+            rvArticles.setHasFixedSize(true)
+            this.adapter = articleAdapter
+            addItemDecoration( DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+            addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+        }
+
+        // observing the data change
         viewModel.observeNewsData().observe(viewLifecycleOwner, Observer {
+
             when (it) {
                 is NetworkResult.Success -> {
                     Log.d(DEBUG_TAG, "success")
+                    pbProcessing.visibility = GONE
+                    swipeRefresh.isRefreshing = false
                     it.data?.let { list ->
-                        dataBinding.pbProcessing.visibility = GONE
                         articleAdapter.submitList(list, viewModel.currentPage)
                     }
                 }
                 is NetworkResult.Error -> {
-                    Log.d(DEBUG_TAG, "error")
-                    dataBinding.pbProcessing.visibility = GONE
+                    Log.d(DEBUG_TAG, "error ${it.exception.message}")
+                    swipeRefresh.isRefreshing = false
+                    pbProcessing.visibility = GONE
+                    Toast.makeText(requireContext(),"Something went wrong",Toast.LENGTH_SHORT).show()
                 }
                 NetworkResult.InProgress -> {
                     Log.d(DEBUG_TAG, "progress")
-                    if(!dataBinding.pbProcessing.isVisible)
-                        dataBinding.pbProcessing.visibility = VISIBLE
+                    if(!pbProcessing.isVisible)
+                        pbProcessing.visibility = VISIBLE
                 }
             }
         })
+
+        // listener for swipe refresh
+        swipeRefresh.setOnRefreshListener {
+            // resetting the pagination state
+            scrollListener?.resetState()
+            // resetting the currentPage
+            viewModel.currentPage=1
+            // fetch data  from the first page
+            viewModel.startJob()
+        }
     }
 
 

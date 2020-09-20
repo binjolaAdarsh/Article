@@ -9,6 +9,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.lifecycle.LiveData
 
+/**
+ * this is the Helper class  which we can observe in the app when the device becomes offline/online
+ * and react to the changes
+ */
 object InternetUtil : LiveData<Boolean>() {
 
     private var broadcastReceiver: BroadcastReceiver? = null

@@ -16,7 +16,7 @@ class ArticleAdapter(
     var glide: RequestManager
 ) : RecyclerView.Adapter<ArticleAdapter.ItemViewHolder>() {
 
-    var list: MutableList<Article> = mutableListOf<Article>()
+    var list: MutableList<Article> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -33,7 +33,7 @@ class ArticleAdapter(
 
     class ItemViewHolder(
         private val binding: ArticleItemBinding,
-        val glide: RequestManager
+        private val glide: RequestManager
     ) : RecyclerView.ViewHolder(binding.root) {
         private val requestOptions: RequestOptions = RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -41,8 +41,8 @@ class ArticleAdapter(
         fun bind(model: Article) {
             binding.apply {
                 article = model
-                glide.load(model.userImageUrl).apply(requestOptions.circleCrop()).into(ivUserImage)
-                glide.load(model.articleImageUrl).apply(requestOptions.centerCrop())
+                glide.load(model.userImageUrl).apply(requestOptions.placeholder(R.drawable.avatar).circleCrop()).into(ivUserImage)
+                glide.load(model.articleImageUrl).apply(requestOptions.placeholder(R.drawable.image_placeholder).centerCrop())
                     .into(ivArticleImage)
                 executePendingBindings()
             }
@@ -54,9 +54,9 @@ class ArticleAdapter(
     }
 
     fun submitList(list: List<Article>, page: Int) {
-        if (page == 1) {
+        if (page == 1)
             this.list.clear()
-        }
+
         this.list.addAll(
             list.filter {
                 !this.list.contains(it)

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="article"
             type="com.app.article.model.Article" />
@@ -12,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/article_recyclerview_padding">
 
         <ImageView
             android:id="@+id/ivUserImage"
@@ -23,24 +24,31 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars[0]" />
 
-        <TextView android:textColor="@android:color/black"
-           android:textStyle="bold"
+        <TextView
             android:id="@+id/tvUserName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/article_username_margin_start"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{article.userName }"
-            tools:text="user name"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvTime"
             app:layout_constraintStart_toEndOf="@+id/ivUserImage"
-            app:layout_constraintTop_toTopOf="@+id/ivUserImage" />
+            app:layout_constraintTop_toTopOf="@+id/ivUserImage"
+            tools:text="user name" />
 
         <TextView
             android:id="@+id/tvUserDesignation"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/article_user_desig_margin_start"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{article.userDesignation }"
             app:layout_constraintBottom_toBottomOf="@+id/ivUserImage"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivUserImage"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName"
             tools:text="User Designation" />
@@ -55,13 +63,13 @@
             tools:text="1 min" />
 
         <ImageView
-            android:visibility="@{article.articleImageUrl.length !=0}"
-
             android:id="@+id/ivArticleImage"
+
             android:layout_width="0dp"
-            android:layout_height="170dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="@dimen/article_image_height"
+            android:layout_marginTop="@dimen/article_image_margin_top"
             android:scaleType="centerCrop"
+            android:visibility="@{article.articleImageUrl.length !=0}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivUserImage"
@@ -71,7 +79,7 @@
             android:id="@+id/tvContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/article_content_margin_top"
             android:text="@{article.articleContent }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,10 +90,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:visibility="@{article.articleTitle.length !=0}"
-
+            android:layout_marginTop="@dimen/article_title_margin_top"
             android:text="@{article.articleTitle }"
+            android:visibility="@{article.articleTitle.length !=0}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContent"
@@ -95,33 +102,34 @@
             android:id="@+id/tvUrl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="@{article.articleUrl.length !=0}"
-
+            android:layout_marginTop="@dimen/article_url_margin_top"
             android:text="@{article.articleUrl }"
+
+            android:visibility="@{article.articleUrl.length !=0}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Article url " />
 
-        <TextView android:textColor="@android:color/black"
+        <TextView
             android:id="@+id/tvLikes"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/article_likes_margin_top"
             android:text="@{article.articleLikes }"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUrl"
             tools:text="4.5k Likes" />
 
         <TextView
-            android:textColor="@android:color/black"
             android:id="@+id/tvComments"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{article.articleComments }"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvLikes"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="30k Comments" />

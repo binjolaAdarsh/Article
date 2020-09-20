@@ -7,10 +7,11 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+/**
+ * App level module  providing dependencies for the app level
+ */
 @Module
 object AppModule {
-
-
     @Provides
     @Singleton
     fun getGlide(application: Application): RequestManager {

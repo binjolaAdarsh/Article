@@ -7,6 +7,9 @@ import javax.inject.Scope;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * scope for the ArticleFragment
+ */
 @Scope
 @Documented
 @Retention(RUNTIME)

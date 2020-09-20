@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.article.model.Article
 import com.app.article.model.ArticleModel
 import com.app.article.repo.DataRepository
 import com.app.article.utils.DEBUG_TAG
@@ -17,8 +18,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ArticlesViewModel @Inject constructor(private val dataSource: DataRepository) : ViewModel() {
-    private val _articles = MutableLiveData<NetworkResult<List<ArticleModel>>>()
-    private val articles: LiveData<NetworkResult<List<ArticleModel>>> = _articles
+    private val _articles = MutableLiveData<NetworkResult<List<Article>>>()
+    private val articles: LiveData<NetworkResult<List<Article>>> = _articles
+   var currentPage=1
+    var list: MutableList<Article> = mutableListOf()
+
     fun observeNewsData() = articles
     private lateinit var previousJob: Job
 
@@ -30,17 +34,8 @@ class ArticlesViewModel @Inject constructor(private val dataSource: DataReposito
     fun getData(page:String="1") {
         _articles.postValue(NetworkResult.InProgress)
         Log.d(DEBUG_TAG, "onloading starts")
-        previousJob = if (!this::previousJob.isInitialized) {
 
-            startJob(page)
-
-        } else {
-            if (previousJob.isActive) {
-                Log.d(DEBUG_TAG, "cancelling previous jobs")
-                previousJob.cancel()
-            }
-            startJob(page)
-        }
+        startJob(page)
 
     }
 
@@ -49,7 +44,7 @@ class ArticlesViewModel @Inject constructor(private val dataSource: DataReposito
             try {
                 // Make network request using a blocking call
                     val data=   dataSource.fetchArticles(InternetUtil.isInternetOn(),page=page)
-                if(data !=null && data.isNotEmpty()){
+                if(data !=null ){
                        _articles.postValue(NetworkResult.Success(data))
                    }
 

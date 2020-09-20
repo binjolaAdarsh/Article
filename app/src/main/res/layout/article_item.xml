@@ -6,7 +6,7 @@
     <data>
         <variable
             name="article"
-            type="com.app.article.model.ArticleModel" />
+            type="com.app.article.model.Article" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,12 +23,13 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars[0]" />
 
-        <TextView
+        <TextView android:textColor="@android:color/black"
+           android:textStyle="bold"
             android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{article.id}"
+            android:text="@{article.userName }"
             tools:text="user name"
             app:layout_constraintStart_toEndOf="@+id/ivUserImage"
             app:layout_constraintTop_toTopOf="@+id/ivUserImage" />
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:text="@{article.userDesignation }"
             app:layout_constraintBottom_toBottomOf="@+id/ivUserImage"
             app:layout_constraintStart_toEndOf="@+id/ivUserImage"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName"
@@ -48,12 +49,14 @@
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@{article.articleTime }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1 min" />
 
         <ImageView
+            android:visibility="@{article.articleImageUrl.length !=0}"
+
             android:id="@+id/ivArticleImage"
             android:layout_width="0dp"
             android:layout_height="170dp"
@@ -69,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="@{article.articleContent }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivArticleImage"
@@ -80,7 +83,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:visibility="@{article.articleTitle.length !=0}"
+
+            android:text="@{article.articleTitle }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContent"
@@ -91,27 +96,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:visibility="@{article.articleUrl.length !=0}"
+
+            android:text="@{article.articleUrl }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Article url " />
 
-        <TextView
+        <TextView android:textColor="@android:color/black"
             android:id="@+id/tvLikes"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="@{article.articleLikes }"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUrl"
             tools:text="4.5k Likes" />
 
         <TextView
+            android:textColor="@android:color/black"
             android:id="@+id/tvComments"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@{article.articleComments }"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvLikes"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="30k Comments" />

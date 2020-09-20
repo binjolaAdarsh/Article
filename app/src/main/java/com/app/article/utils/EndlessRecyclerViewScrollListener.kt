@@ -19,8 +19,9 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     private val startingPageIndex = 1
     var mLayoutManager: RecyclerView.LayoutManager
 
-    constructor(layoutManager: LinearLayoutManager) {
+    constructor(layoutManager: LinearLayoutManager,currentPage:Int) {
         mLayoutManager = layoutManager
+        this.currentPage= currentPage
     }
 
     constructor(layoutManager: GridLayoutManager) {

@@ -6,27 +6,24 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-@Entity(tableName = "ArticleTable" )
 data class ArticleModel(
-@PrimaryKey
  @field:SerializedName("id")
     val id: String,
- var localId: Int,
 
     @field:SerializedName("createdAt")
-    val createdAt: String,
+    val createdAt: String="",
 
     @field:SerializedName("content")
-    val content: String,
+    val content: String="",
 
     @field:SerializedName("comments")
-    val comments: Int,
+    val comments: Int=0,
 
     @field:SerializedName("likes")
-    val likes: Int,
+    val likes: Int=0,
 
     @field:SerializedName("media")
-    val media: List<Media>?=null,
+    val media: List<Media?>?=null,
 
     @field:SerializedName("user")
     val user: List<User>?=null
@@ -80,4 +77,20 @@ data class User(
     @SerializedName("about")
     @Expose
     val about: String
+)
+
+@Entity(tableName = "ArticleTable" )
+data class Article(
+    @PrimaryKey
+    val articleId:Int,
+    val userImageUrl:String?="",
+    val userName:String?="",
+    val userDesignation:String?="",
+    val articleTime:String?="",
+    val articleImageUrl:String?="",
+    val articleContent:String?="",
+    val articleTitle:String?="",
+    val articleUrl:String?="",
+    val articleLikes:String?="",
+    val articleComments:String?=""
 )

@@ -1,0 +1,90 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.android_gradle_plugin = '3.5.0'
+versions.kotlin = "1.3.61"
+versions.nav_version = "2.3.0"
+versions.appcompat = "1.2.0"
+versions.kotlin_ktx="1.3.1"
+versions.constraint = "2.0.1"
+versions.legacy_support = "1.0.0"
+versions.junit = "4.12"
+versions.test_runner = "1.3.0"
+versions.espresso = "3.3.0"
+versions.dagger = "2.28.3"
+versions.fragment_version = "1.2.5"
+versions.viewmodel_ktx = "2.2.0"
+versions.room = "2.2.5"
+versions.glide = "4.11.0"
+versions.gson = "2.8.6"
+versions.retrofit = "2.6.1"
+versions.convertor_gson = "2.6.0"
+versions.ok_http = "4.4.0"
+
+def deps = [:]
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.app_compat = "androidx.appcompat:appcompat:$versions.appcompat"
+deps.constraint = "androidx.constraintlayout:constraintlayout:$versions.constraint"
+deps.legacy_support = "androidx.legacy:legacy-support-v4:$versions.legacy_support"
+deps.junit="junit:junit:$versions.junit"
+deps.test_runner="androidx.test:runner:$versions.test_runner"
+deps.espresso="androidx.test.espresso:espresso-core:$versions.espresso"
+deps.viewmodel_ktx="androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.viewmodel_ktx"
+
+deps.gson="com.google.code.gson:gson:$versions.gson"
+deps.retrofit="com.squareup.retrofit2:retrofit:$versions.retrofit"
+deps.convertor_gson="com.squareup.retrofit2:converter-gson:$versions.convertor_gson"
+deps.ok_http="com.squareup.okhttp3:okhttp:$versions.ok_http"
+deps.log_interceptor="com.squareup.okhttp3:logging-interceptor:$versions.ok_http"
+
+def kotlin = [:]
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.ktx = "androidx.core:core-ktx:$versions.kotlin_ktx"
+deps.kotlin = kotlin
+
+
+
+def navigation = [:]
+navigation.plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.nav_version"
+navigation.frag_ktx = "androidx.navigation:navigation-fragment-ktx:$versions.nav_version"
+navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$versions.nav_version"
+deps.navigation = navigation
+
+def fragment = [:]
+fragment.name = "androidx.fragment:fragment:$versions.fragment_version"
+fragment.frag_ktx = "androidx.fragment:fragment-ktx:$versions.fragment_version"
+deps.fragment = fragment
+
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.ktx = "androidx.room:room-ktx:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+deps.room = room
+
+def glide = [:]
+glide.glide = "com.github.bumptech.glide:glide:$versions.glide"
+glide.compiler = "com.github.bumptech.glide:compiler:$versions.glide"
+deps.glide = glide
+
+
+def dagger = [:]
+dagger.name = "com.google.dagger:dagger:$versions.dagger"
+dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.android_processor= "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger = dagger
+
+
+
+
+ext.deps = deps
+
+// add repo
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+}
+
+ext.addRepos = this.&addRepos
